@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LIBRARYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adminler">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="AdminKullaniciId" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdminSifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="YeniAdminEklemeYetkisi" Type="int" />
+        </EntityType>
+        <EntityType Name="Emanetler">
+          <Key>
+            <PropertyRef Name="EmanetId" />
+          </Key>
+          <Property Name="EmanetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmanetKullaniciId" Type="int" />
+          <Property Name="EmanetKitapId" Type="int" />
+          <Property Name="AlinanTarih" Type="date" />
+          <Property Name="TeslimTarihi" Type="date" />
+          <Property Name="Durumu" Type="int" />
+        </EntityType>
+        <EntityType Name="Favoriler">
+          <Key>
+            <PropertyRef Name="FavoriId" />
+          </Key>
+          <Property Name="FavoriId" Type="int" Nullable="false" />
+          <Property Name="FavoriKitapId" Type="int" />
+          <Property Name="FavoriKullaniciId" Type="int" />
+        </EntityType>
+        <EntityType Name="Kitaplar">
+          <Key>
+            <PropertyRef Name="KitapId" />
+          </Key>
+          <Property Name="KitapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KitapAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="KitapYazar" Type="int" />
+          <Property Name="KitapTur" Type="int" />
+          <Property Name="SayfaSayisi" Type="int" />
+          <Property Name="BaskiSayisi" Type="int" />
+          <Property Name="KitapOzet" Type="nvarchar(max)" />
+          <Property Name="KitapAdeti" Type="int" />
+          <Property Name="KitapFotoUrl" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="KullaniciId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="KullaniciSifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TeslimDurum">
+          <Key>
+            <PropertyRef Name="DurumId" />
+          </Key>
+          <Property Name="DurumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DurumIsım" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Turler">
+          <Key>
+            <PropertyRef Name="TurId" />
+          </Key>
+          <Property Name="TurId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TurAd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Yazarlar">
+          <Key>
+            <PropertyRef Name="YazarId" />
+          </Key>
+          <Property Name="YazarId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YazarAd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Emanetler_Kitaplar">
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="0..1" />
+          <End Role="Emanetler" Type="Self.Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kitaplar">
+              <PropertyRef Name="KitapId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="EmanetKitapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emanetler_Kullanıcılar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Emanetler" Type="Self.Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="EmanetKullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emanetler_TeslimDurum">
+          <End Role="TeslimDurum" Type="Self.TeslimDurum" Multiplicity="0..1" />
+          <End Role="Emanetler" Type="Self.Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeslimDurum">
+              <PropertyRef Name="DurumId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="Durumu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoriler_Kitaplar">
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="0..1" />
+          <End Role="Favoriler" Type="Self.Favoriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kitaplar">
+              <PropertyRef Name="KitapId" />
+            </Principal>
+            <Dependent Role="Favoriler">
+              <PropertyRef Name="FavoriKitapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kitaplar_Turler">
+          <End Role="Turler" Type="Self.Turler" Multiplicity="0..1" />
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turler">
+              <PropertyRef Name="TurId" />
+            </Principal>
+            <Dependent Role="Kitaplar">
+              <PropertyRef Name="KitapTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kitaplar_Yazarlar">
+          <End Role="Yazarlar" Type="Self.Yazarlar" Multiplicity="0..1" />
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yazarlar">
+              <PropertyRef Name="YazarId" />
+            </Principal>
+            <Dependent Role="Kitaplar">
+              <PropertyRef Name="KitapYazar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIBRARYModelStoreContainer">
+          <EntitySet Name="Adminler" EntityType="Self.Adminler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emanetler" EntityType="Self.Emanetler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favoriler" EntityType="Self.Favoriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kitaplar" EntityType="Self.Kitaplar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeslimDurum" EntityType="Self.TeslimDurum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Turler" EntityType="Self.Turler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yazarlar" EntityType="Self.Yazarlar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Emanetler_Kitaplar" Association="Self.FK_Emanetler_Kitaplar">
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emanetler_Kullanıcılar" Association="Self.FK_Emanetler_Kullanıcılar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emanetler_TeslimDurum" Association="Self.FK_Emanetler_TeslimDurum">
+            <End Role="TeslimDurum" EntitySet="TeslimDurum" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoriler_Kitaplar" Association="Self.FK_Favoriler_Kitaplar">
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+            <End Role="Favoriler" EntitySet="Favoriler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kitaplar_Turler" Association="Self.FK_Kitaplar_Turler">
+            <End Role="Turler" EntitySet="Turler" />
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kitaplar_Yazarlar" Association="Self.FK_Kitaplar_Yazarlar">
+            <End Role="Yazarlar" EntitySet="Yazarlar" />
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIBRARYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adminler">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="AdminKullaniciId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdminSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YeniAdminEklemeYetkisi" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Emanetler">
+          <Key>
+            <PropertyRef Name="EmanetId" />
+          </Key>
+          <Property Name="EmanetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmanetKullaniciId" Type="Int32" />
+          <Property Name="EmanetKitapId" Type="Int32" />
+          <Property Name="AlinanTarih" Type="DateTime" Precision="0" />
+          <Property Name="TeslimTarihi" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Kitaplar" Relationship="Self.FK_Emanetler_Kitaplar" FromRole="Emanetler" ToRole="Kitaplar" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Self.FK_Emanetler_Kullanıcılar" FromRole="Emanetler" ToRole="Kullanicilar" />
+          <Property Name="Durumu" Type="Int32" />
+          <NavigationProperty Name="TeslimDurum" Relationship="LIBRARYModel.FK_Emanetler_TeslimDurum" FromRole="Emanetler" ToRole="TeslimDurum" />
+        </EntityType>
+        <EntityType Name="Favoriler">
+          <Key>
+            <PropertyRef Name="FavoriId" />
+          </Key>
+          <Property Name="FavoriId" Type="Int32" Nullable="false" />
+          <Property Name="FavoriKitapId" Type="Int32" />
+          <Property Name="FavoriKullaniciId" Type="Int32" />
+          <NavigationProperty Name="Kitaplar" Relationship="Self.FK_Favoriler_Kitaplar" FromRole="Favoriler" ToRole="Kitaplar" />
+        </EntityType>
+        <EntityType Name="Kitaplar">
+          <Key>
+            <PropertyRef Name="KitapId" />
+          </Key>
+          <Property Name="KitapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KitapAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KitapYazar" Type="Int32" />
+          <Property Name="KitapTur" Type="Int32" />
+          <Property Name="SayfaSayisi" Type="Int32" />
+          <Property Name="BaskiSayisi" Type="Int32" />
+          <Property Name="KitapOzet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="KitapAdeti" Type="Int32" />
+          <Property Name="KitapFotoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emanetler" Relationship="Self.FK_Emanetler_Kitaplar" FromRole="Kitaplar" ToRole="Emanetler" />
+          <NavigationProperty Name="Favoriler" Relationship="Self.FK_Favoriler_Kitaplar" FromRole="Kitaplar" ToRole="Favoriler" />
+          <NavigationProperty Name="Turler" Relationship="Self.FK_Kitaplar_Turler" FromRole="Kitaplar" ToRole="Turler" />
+          <NavigationProperty Name="Yazarlar" Relationship="Self.FK_Kitaplar_Yazarlar" FromRole="Kitaplar" ToRole="Yazarlar" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="KullaniciId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KullaniciSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emanetler" Relationship="Self.FK_Emanetler_Kullanıcılar" FromRole="Kullanicilar" ToRole="Emanetler" />
+        </EntityType>
+        <EntityType Name="Turler">
+          <Key>
+            <PropertyRef Name="TurId" />
+          </Key>
+          <Property Name="TurId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TurAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kitaplar" Relationship="Self.FK_Kitaplar_Turler" FromRole="Turler" ToRole="Kitaplar" />
+        </EntityType>
+        <EntityType Name="Yazarlar">
+          <Key>
+            <PropertyRef Name="YazarId" />
+          </Key>
+          <Property Name="YazarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YazarAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kitaplar" Relationship="Self.FK_Kitaplar_Yazarlar" FromRole="Yazarlar" ToRole="Kitaplar" />
+        </EntityType>
+        <Association Name="FK_Emanetler_Kitaplar">
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="0..1" />
+          <End Role="Emanetler" Type="Self.Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kitaplar">
+              <PropertyRef Name="KitapId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="EmanetKitapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emanetler_Kullanıcılar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Emanetler" Type="Self.Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="EmanetKullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favoriler_Kitaplar">
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="0..1" />
+          <End Role="Favoriler" Type="Self.Favoriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kitaplar">
+              <PropertyRef Name="KitapId" />
+            </Principal>
+            <Dependent Role="Favoriler">
+              <PropertyRef Name="FavoriKitapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kitaplar_Turler">
+          <End Role="Turler" Type="Self.Turler" Multiplicity="0..1" />
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turler">
+              <PropertyRef Name="TurId" />
+            </Principal>
+            <Dependent Role="Kitaplar">
+              <PropertyRef Name="KitapTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kitaplar_Yazarlar">
+          <End Role="Yazarlar" Type="Self.Yazarlar" Multiplicity="0..1" />
+          <End Role="Kitaplar" Type="Self.Kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yazarlar">
+              <PropertyRef Name="YazarId" />
+            </Principal>
+            <Dependent Role="Kitaplar">
+              <PropertyRef Name="KitapYazar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIBRARYEntities0" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adminler" EntityType="Self.Adminler" />
+          <EntitySet Name="Emanetler" EntityType="Self.Emanetler" />
+          <EntitySet Name="Favoriler" EntityType="Self.Favoriler" />
+          <EntitySet Name="Kitaplar" EntityType="Self.Kitaplar" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" />
+          <EntitySet Name="Turler" EntityType="Self.Turler" />
+          <EntitySet Name="Yazarlar" EntityType="Self.Yazarlar" />
+          <AssociationSet Name="FK_Emanetler_Kitaplar" Association="Self.FK_Emanetler_Kitaplar">
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emanetler_Kullanıcılar" Association="Self.FK_Emanetler_Kullanıcılar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favoriler_Kitaplar" Association="Self.FK_Favoriler_Kitaplar">
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+            <End Role="Favoriler" EntitySet="Favoriler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kitaplar_Turler" Association="Self.FK_Kitaplar_Turler">
+            <End Role="Turler" EntitySet="Turler" />
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kitaplar_Yazarlar" Association="Self.FK_Kitaplar_Yazarlar">
+            <End Role="Yazarlar" EntitySet="Yazarlar" />
+            <End Role="Kitaplar" EntitySet="Kitaplar" />
+          </AssociationSet>
+          <EntitySet Name="TeslimDurum" EntityType="LIBRARYModel.TeslimDurum" />
+          <AssociationSet Name="FK_Emanetler_TeslimDurum" Association="LIBRARYModel.FK_Emanetler_TeslimDurum">
+            <End Role="TeslimDurum" EntitySet="TeslimDurum" />
+            <End Role="Emanetler" EntitySet="Emanetler" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TeslimDurum">
+          <Key>
+            <PropertyRef Name="DurumId" />
+          </Key>
+          <Property Name="DurumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurumIsım" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emanetler" Relationship="LIBRARYModel.FK_Emanetler_TeslimDurum" FromRole="TeslimDurum" ToRole="Emanetler" />
+        </EntityType>
+        <Association Name="FK_Emanetler_TeslimDurum">
+          <End Type="LIBRARYModel.TeslimDurum" Role="TeslimDurum" Multiplicity="0..1" />
+          <End Type="LIBRARYModel.Emanetler" Role="Emanetler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeslimDurum">
+              <PropertyRef Name="DurumId" />
+            </Principal>
+            <Dependent Role="Emanetler">
+              <PropertyRef Name="Durumu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIBRARYModelStoreContainer" CdmEntityContainer="LIBRARYEntities0">
+          <EntitySetMapping Name="Adminler">
+            <EntityTypeMapping TypeName="LIBRARYModel.Adminler">
+              <MappingFragment StoreEntitySet="Adminler">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="AdminKullaniciId" ColumnName="AdminKullaniciId" />
+                <ScalarProperty Name="AdminSifre" ColumnName="AdminSifre" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="YeniAdminEklemeYetkisi" ColumnName="YeniAdminEklemeYetkisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emanetler">
+            <EntityTypeMapping TypeName="LIBRARYModel.Emanetler">
+              <MappingFragment StoreEntitySet="Emanetler">
+                <ScalarProperty Name="Durumu" ColumnName="Durumu" />
+                <ScalarProperty Name="EmanetId" ColumnName="EmanetId" />
+                <ScalarProperty Name="EmanetKullaniciId" ColumnName="EmanetKullaniciId" />
+                <ScalarProperty Name="EmanetKitapId" ColumnName="EmanetKitapId" />
+                <ScalarProperty Name="AlinanTarih" ColumnName="AlinanTarih" />
+                <ScalarProperty Name="TeslimTarihi" ColumnName="TeslimTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favoriler">
+            <EntityTypeMapping TypeName="LIBRARYModel.Favoriler">
+              <MappingFragment StoreEntitySet="Favoriler">
+                <ScalarProperty Name="FavoriId" ColumnName="FavoriId" />
+                <ScalarProperty Name="FavoriKitapId" ColumnName="FavoriKitapId" />
+                <ScalarProperty Name="FavoriKullaniciId" ColumnName="FavoriKullaniciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kitaplar">
+            <EntityTypeMapping TypeName="LIBRARYModel.Kitaplar">
+              <MappingFragment StoreEntitySet="Kitaplar">
+                <ScalarProperty Name="KitapId" ColumnName="KitapId" />
+                <ScalarProperty Name="KitapAd" ColumnName="KitapAd" />
+                <ScalarProperty Name="KitapYazar" ColumnName="KitapYazar" />
+                <ScalarProperty Name="KitapTur" ColumnName="KitapTur" />
+                <ScalarProperty Name="SayfaSayisi" ColumnName="SayfaSayisi" />
+                <ScalarProperty Name="BaskiSayisi" ColumnName="BaskiSayisi" />
+                <ScalarProperty Name="KitapOzet" ColumnName="KitapOzet" />
+                <ScalarProperty Name="KitapAdeti" ColumnName="KitapAdeti" />
+                <ScalarProperty Name="KitapFotoUrl" ColumnName="KitapFotoUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilar">
+            <EntityTypeMapping TypeName="LIBRARYModel.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+                <ScalarProperty Name="KullaniciAd" ColumnName="KullaniciAd" />
+                <ScalarProperty Name="KullaniciSifre" ColumnName="KullaniciSifre" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turler">
+            <EntityTypeMapping TypeName="LIBRARYModel.Turler">
+              <MappingFragment StoreEntitySet="Turler">
+                <ScalarProperty Name="TurId" ColumnName="TurId" />
+                <ScalarProperty Name="TurAd" ColumnName="TurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yazarlar">
+            <EntityTypeMapping TypeName="LIBRARYModel.Yazarlar">
+              <MappingFragment StoreEntitySet="Yazarlar">
+                <ScalarProperty Name="YazarId" ColumnName="YazarId" />
+                <ScalarProperty Name="YazarAd" ColumnName="YazarAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeslimDurum">
+            <EntityTypeMapping TypeName="LIBRARYModel.TeslimDurum">
+              <MappingFragment StoreEntitySet="TeslimDurum">
+                <ScalarProperty Name="DurumIsım" ColumnName="DurumIsım" />
+                <ScalarProperty Name="DurumId" ColumnName="DurumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

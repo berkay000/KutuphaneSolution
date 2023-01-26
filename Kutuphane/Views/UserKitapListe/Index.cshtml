@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@using Kutuphane.Models.Entity_Framework
+@model Kutuphane.Controllers.UserKitapListeController.BookClass
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <script src="https://kit.fontawesome.com/ebf6563993.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width" />
+    <title>MainMenu</title>
+    <style>
+        .float-my-children > * {
+            float: left;
+            margin-right: 0px;
+        }
+
+        .clearfix {
+            *zoom: 1
+        }
+
+            .clearfix:before,
+            .clearfix:after {
+                content: "";
+                display: table;
+            }
+
+            .clearfix:after {
+                clear: both;
+            }
+
+        .row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+        }
+
+        hr.solid {
+            width: 1750px;
+            margin-left: 80px;
+            border-top: 2px solid black;
+        }
+
+        hr.solid2 {
+            width: 220px;
+            margin-left: 30px;
+            margin-top: 8px;
+            border-top: 2px solid black;
+        }
+
+
+        .button {
+            cursor: pointer;
+            border-radius: 25px;
+            background: #00ADB5;
+            width: 300px;
+            height: 90px;
+            font-size: 30px;
+            font-family: Poppins;
+            text-align: center;
+            margin-left: 745px;
+            color: black;
+            color: #EEEEEE;
+            padding-top: 0px;
+        }
+
+        a:link {
+            color: #EEEEEE;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #222831;
+        }
+
+        a:visited {
+            color: #EEEEEE;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        .title {
+            font-weight: 600;
+            font-family: Poppins;
+            color: #00ADB5;
+            font-size: 32px;
+            font-weight: 600;
+            padding-top: 55px;
+            padding-left: 130px;
+        }
+
+        .title2 {
+            font-family: Poppins;
+            font-size: 32px;
+            font-weight: 600;
+            padding-top: 55px;
+            padding-left: 70px;
+            font-weight: 600;
+            color: grey;
+        }
+
+        .filter {
+            border-color: black;
+            border: solid;
+            border-width: 1px;
+            height: 450px;
+            width: 400px;
+            background-color: rgb(244, 218, 248);
+        }
+
+        .grid-container {
+            width: 1000px;
+            margin-left: 200px;
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+
+        .grid-item {
+            width: 300px;
+            height: 370px;
+            border-radius: 20px;
+            margin-right: 60px;
+            margin-bottom: 100px;
+            background-color: #EBEBEB;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .img {
+            padding: 0px;
+            border-radius: 20px 20px 0px 0px;
+            object-fit: fill;
+            width: 300px;
+            height: 320px;
+        }
+
+        .buyTicket {
+            padding-top: 7px;
+            font-size: 28px;
+            height: 50px;
+            width: 300px;
+            font-family: Poppins;
+            background-color: #00ADB5;
+            border-radius: 0px 0px 20px 20px;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+
+    @*<div class=" clearfix float-my-children ">
+
+            <a style="text-decoration:none; " class="title">Vizyonda</a>
+            <a style="text-decoration:none;" class="title2">Yakında</a>
+        </div>*@
+
+    <hr class="solid">
+    <br><br>
+    @using (Html.BeginForm("Index", "UserKitapListe", FormMethod.Post))
+    {
+        <div class=" clearfix float-my-children ">
+            <div class="filter">
+
+                <div class="dropdown">
+                    <button class=" " style="margin-left:30px;margin-top:20px; color: black; border: none;
+font-weight: 500;font-size:20px; font-family: Poppins; background-color: pink;
+" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Yazar Seç
+
+                    </button>
+                    <select name="yazarfiltre">
+                        @foreach (var item in Model.Types)
+                        {
+                            <option value="@item.Text">@item.Text</option>
+                        }
+                    </select>
+                    <ul class="dropdown-menu">
+                        @foreach (var x in Model.Types)
+                        {
+                            <li><div class="dropdown-item" style="color: black;
+font-weight: 500; font-family: Poppins;">@x</div></li>
+                        }
+                    </ul>
+                </div>
+                <hr class="solid2">
+                <div class="dropdown">
+                    <button class=" " style="margin-left:30px;margin-top:20px; color: black; border: none;
+font-weight: 500;font-size:20px; font-family: Poppins; background-color: #EBEBEB;
+" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tür Seç
+
+                    </button>
+                    <select name="turfiltre">
+                        @foreach (var item in Model.Types2)
+                        {
+                            <option value="@item.Text">@item.Text</option>
+                        }
+                    </select>
+                    <ul class="dropdown-menu">
+                        @foreach (var x in Model.Types2)
+                        {
+                            <li><div class="dropdown-item" style="color: black;
+font-weight: 500; font-family: Poppins;">@x</div></li>
+                        }
+                    </ul>
+                </div>
+                <hr class="solid2">
+                <button type="submit" style="height: 60px; width: 200px; background-color: #222831;
+border-radius: 15px; margin-top:40px; margin-left: 80px; font-size:20px;font-weight: 500;
+font-family: Poppins;color:white ">Filtrele</button>
+
+            </div>
+
+
+
+            <div class="grid-container">
+                @foreach (var x in Model.Kitaplars)
+                {
+                    <div style="display:@(x.KitapAd==null?"none" : "block");">
+                        <a href="./KitapInfo?id=@x.KitapId" class="grid-item" style="text-decoration:none;">
+                            <img class="img" src="@x.KitapFotoUrl" alt="@x.KitapAd">
+                            <div style="font-family: Poppins; color: black; font-size: 28px; font-weight: 500;margin-top:15px;">
+                                @x.KitapAd
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+

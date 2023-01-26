@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Kutuphane.Models.Entity_Framework.Turler>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Index", "AdminTurListe", FormMethod.Get))
+{
+    <div style="text-align: end; margin-top: 2%; margin-right: 5%">
+        @Html.TextBox("search")
+        <input type="submit" value="Search" class="btn btn-info" />
+    </div>
+}
+
+<div style="margin-right:5%;margin-left:5%; margin-top:2%;">
+    <table class="table table-bordered" style="padding-left: 5%; padding-right: 5%">
+        <thead>
+            <tr style="text-align:center">
+                <th>Tür Id</th>
+                <th>Tür Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td>Kayıt Bulunamadı</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var tur in Model)
+                {
+                    <tr style="text-align: center;">
+                        <td>@tur.TurId</td>
+                        <td>@tur.TurAd</td>
+                        <td>
+                            <a id="btnDelete" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#DeleteModal-@tur.TurId"
+                               style='margin-left:20px'><i class='fa fa-trash'></i> Sil</a>
+
+                            <a id="btnGuncelle" class="btn btn-info btn-sm" data-toggle="modal" data-target="#UpdateModal-@tur.TurId"
+                               style='margin-left:20px'>Güncelle</a>
+
+
+
+                            @using (Html.BeginForm("SilTur", "AdminTurListe", new { id = tur.TurId }, FormMethod.Post, null))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="modal" tabindex="-1" role="dialog" id="DeleteModal-@tur.TurId">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tür Silme Ekranı</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                "@tur.TurAd" Kulübünü Silme İşlemini Onaylıyor Musunuz
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger">Evet</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hayır</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            @using (Html.BeginForm("GuncelleTur", "AdminTurListe", new { id = tur.TurId }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="modal" tabindex="-1" role="dialog" id="UpdateModal-@tur.TurId">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tür Güncelleme Ekranı</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <label>Tür Adı</label>
+                                                <input type="text" class="form-control" name="TurAd" value="@tur.TurAd" />
+                                            </div>
+
+                                            <input hidden type="text" name="TurId" value="@tur.TurId" />
+
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger">Güncelle</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Çıkış</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+
+
+    </table>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalEkle" style="margin-left:5%">
+    Yeni Tür Ekle
+</button>
+
+@*Tür Ekleme PopUp*@
+
+
+<div class="modal" id="ModalEkle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class=" modal-header">
+                <h2 class="modal-title">Tür Ekleme Sayfası</h2>
+            </div>
+            <form method="post" action="/AdminTurListe/YeniTur">
+                <div class="modal-body">
+
+                    <div style="margin-top:10px">
+                        <label>Tür Adı</label>
+                        <input type="text" class="form-control" name="TurAd" />
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <button class="btn btn-info">Kaydet</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

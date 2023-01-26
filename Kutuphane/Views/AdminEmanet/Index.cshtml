@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Kutuphane.Models.Entity_Framework.Emanetler>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .img {
+        width: 25%;
+        height: auto;
+    }
+</style>
+
+<html>
+<body>
+
+
+    @using (Html.BeginForm("Index", "AdminEmanet", FormMethod.Get))
+    {
+        <div style="text-align: end; margin-top: 2%; margin-right: 5% ">
+            @Html.TextBox("search")
+            <input type="submit" value="Search" class="btn btn-info" />
+        </div>
+    }
+    <div style="margin-right:5%;margin-left:5%; margin-top:2%;">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr style="text-align:center;">
+                    <th>Emanet Id</th>
+                    <th>Kitap Foto</th>
+                    <th>Kitap Ad</th>
+                    <th>Emanet Alan</th>
+                    <th>Emanet Alınan Tarih</th>
+                    <th>Teslim Tarihi</th>
+                    <th>Durumu</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td>Kayıt Bulunamadı</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var emanet in Model)
+                    {
+                        <tr style="text-align: center; ">
+                            <td style="vertical-align:middle;">@emanet.EmanetId</td>
+                            <td> <img src="@emanet.Kitaplar.KitapFotoUrl" class="img" /> </td>
+                            <td style="vertical-align: middle">@emanet.Kitaplar.KitapAd</td>
+                            <td style="vertical-align:middle;">@emanet.Kullanicilar.Ad @emanet.Kullanicilar.Soyad</td>
+                            <td style="vertical-align:middle;">@emanet.AlinanTarih</td>
+                            <td style="vertical-align:middle;">@emanet.TeslimTarihi</td>
+                            <td style="vertical-align:middle;">@emanet.TeslimDurum.DurumIsım</td>
+                            <td style="vertical-align:middle;">
+                                <a href="/AdminEmanet/TeslimEmanet/@emanet.EmanetId" class="btn btn-primary" style="margin-left:5%;">Kitap Teslimi</a>
+                                
+                                <a id="btnUzat" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#UzatModal-@emanet.EmanetId">Süre Uzatma</a>
+
+                                
+
+                                @using (Html.BeginForm("SureUzat", "AdminEmanet", new { id = emanet.EmanetId }, FormMethod.Post, null))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="modal" tabindex="-1" role="dialog" id="UzatModal-@emanet.EmanetId">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Teslim Süresi Uzatma Ekranı</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label>Eski Teslim Tarihi: @emanet.TeslimTarihi</label>
+                                                    <br />
+                                                    <label>Yeni Teslim Tarihini Giriniz</label>
+                                                    <input type="text" class="form-control" name="TurAd" />
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Evet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hayır</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <a href="/AdminKitapListe/YeniKitap" class="btn btn-primary" style="margin-left:5%;">Yeni Kitap Kaydı</a>
+</body>
+
+<div style="margin-left:5%;">
+    @Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+     {"page-link"}
+})
+</div>
+
+
+</html>

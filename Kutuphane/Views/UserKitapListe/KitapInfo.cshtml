@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "KitapInfo";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+@using Kutuphane.Models.Entity_Framework
+@model Kutuphane.Models.Entity_Framework.Kitaplar
+<html>
+<head>
+    <style>
+        .img {
+            padding: 0px;
+            border-radius: 20px 20px 20px 20px;
+            object-fit: fill;
+            width: 300px;
+            height: 320px;
+        }
+        </style>
+</head>
+
+
+<body>
+
+    @Html.HiddenFor(m => m.KitapId)
+
+
+    <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%;border:solid;border-color:black;border-radius:20px;height:40%">
+        <img src="@Model.KitapFotoUrl" class="img"style="height:100%" />
+
+        <label style="padding-left:5%">Kitap Ad:</label>
+        <input type="text" disabled value="@Model.KitapAd" class="field left" readonly; style="border:0;">
+
+        <label>Yazar Ad:</label>
+        <input type="text"disabled value="@Model.Yazarlar.YazarAd" class="field left" readonly; style="border:0;">
+        <br />
+        <label style="padding-left:20%">Kategori:</label>
+        <input type="text"disabled value="@Model.Turler.TurAd" class="field left" readonly; style="border:0;">
+
+        <label>Sayfa Sayısı:</label>
+        <input type="text"disabled value="@Model.SayfaSayisi" class="field left" readonly; style="border:0;">
+
+        <label>Baskı Sayısı:</label>
+        <input type="text"disabled value="@Model.BaskiSayisi" class="field left" readonly; style="border:0;">
+    </div>
+
+
+    <div style="margin-top:5%; margin-right: 10%; margin-left: 10%;">
+        <label>Özet:  </label>
+        @Model.KitapOzet
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,78 @@
+﻿@model Kutuphane.Models.Entity_Framework.Kitaplar
+@*@model IEnumerable<Kutuphane.Models.Entity_Framework.Kitaplar>*@
+
+@{
+    ViewBag.Title = "GüncelleKitap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-left:42%">
+    <h2>Kitap Güncelleme Sayfası</h2>
+</div>
+
+<style>
+    .ozet{
+        height:40%;
+        
+    }
+</style>
+<html>
+<body>
+    @using (Html.BeginForm("GuncelleKitap", "AdminKitapListe", new { @class = "form-group" }, FormMethod.Post, null))
+    {
+       
+            <div style="text-align:center; justify-content:center;">
+
+                @Html.HiddenFor(m=>m.KitapId)
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.KitapAd)
+                    @Html.TextBoxFor(m => m.KitapAd, new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.KitapYazar)
+                    @Html.DropDownListFor(m => m.KitapYazar, (List<SelectListItem>)ViewBag.yazar, "Yazar Seçiniz", new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.KitapTur)
+                    @Html.DropDownListFor(n => n.KitapTur, (List<SelectListItem>)ViewBag.tur, "Kitap Türünü Seçiniz", new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.SayfaSayisi)
+                    @Html.TextBoxFor(m => m.SayfaSayisi, new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.BaskiSayisi)
+                    @Html.TextBoxFor(m => m.BaskiSayisi, new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.KitapAdeti)
+                    @Html.TextBoxFor(m => m.KitapAdeti, new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%">
+                    @Html.LabelFor(m => m.KitapFotoUrl)
+                    @Html.TextBoxFor(m => m.KitapFotoUrl, new { @class = "form-control" })
+                </div>
+
+                <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%;">
+                    @Html.LabelFor(m => m.KitapOzet)
+                    @Html.TextBoxFor(m => m.KitapOzet, new { @class = "form-control ozet" })
+                </div>
+
+
+                <div style="margin-top:10px">
+                    <button class="button btn btn-info">Güncelle</button>
+                </div>
+
+            </div>
+        
+    }
+</body>
+</html>
+

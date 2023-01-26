@@ -1,0 +1,73 @@
+﻿@using Kutuphane.Models.Entity_Framework
+@model Kitaplar
+
+@{
+    ViewBag.Title = "DetayKitap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-left:42%">
+    <h2>Kitap Detay Sayfası</h2>
+</div>
+
+
+<style>
+    .ozet {
+        width: 240px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 24px;
+    }
+</style>
+
+
+
+
+<html>
+<body>
+    @using (Html.BeginForm("DetayKitap", "AdminKitapListe", new { @class = "form-group" }, FormMethod.Post, null))
+    {
+
+        @*<div style="text-align:center; justify-content:center;">*@
+
+        @Html.HiddenFor(m => m.KitapId)
+
+
+        <div style="margin-top: 30px; margin-right: 10%; margin-left: 10%;">
+            <img src="@Model.KitapFotoUrl" class="img" />
+
+            <label style="padding-left:5%">Kitap Ad:</label>
+            <input type="text" value="@Model.KitapAd" class="field left" readonly; style="border:0;">
+
+            <label>Yazar Ad:</label>
+            <input type="text" value="@Model.Yazarlar.YazarAd" class="field left" readonly; style="border:0;">
+            <br />
+            <label style="padding-left:20%">Kategori:</label>
+            <input type="text" value="@Model.Turler.TurAd" class="field left" readonly; style="border:0;">
+
+            <label>Sayfa Sayısı:</label>
+            <input type="text" value="@Model.SayfaSayisi" class="field left" readonly; style="border:0;">
+
+            <label>Baskı Sayısı:</label>
+            <input type="text" value="@Model.BaskiSayisi" class="field left" readonly; style="border:0;">
+        </div>
+
+
+        <div style="margin-top:5%; margin-right: 10%; margin-left: 10%;">
+            <label>Özet:</label>
+            @Model.KitapOzet
+
+        </div>
+
+
+
+
+
+
+
+        @*</div>*@
+    }
+
+</body>
+</html>
+

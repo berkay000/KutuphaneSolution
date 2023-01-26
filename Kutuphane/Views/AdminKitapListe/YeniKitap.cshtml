@@ -1,0 +1,65 @@
+﻿@model Kutuphane.Models.Entity_Framework.Kitaplar
+
+@{
+    ViewBag.Title = "YeniKitap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="padding-left:42%">
+    <h2>Kitap Ekleme Sayfası</h2>
+</div>
+
+
+<html>
+<body>
+
+    <form method="post" class="form-group" style="padding-left:10%;padding-right:10%">
+        <div style="text-align:center; justify-content:center;">
+            <div style="margin-top:30px">
+                <label>Kitap Ad</label>
+                <input type="text" class="form-control" name="KitapAd" />
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Yazar Adı</label>
+                @Html.DropDownListFor(m => m.KitapYazar, (List<SelectListItem>)ViewBag.yazar, "Yazar Seçiniz", new { @class = "form-control" })
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Kitap Türü</label>
+                @Html.DropDownListFor(n => n.KitapTur, (List<SelectListItem>)ViewBag.tur, "Kitap Türünü Seçiniz", new { @class = "form-control" })
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Sayfa Sayısı</label>
+                <input type="text" class="form-control" name="SayfaSayisi" />
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Baskı Sayısı</label>
+                <input type="text" class="form-control" name="BaskiSayisi" />
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Kitap Adeti</label>
+                <input type="text" class="form-control" name="KitapAdeti" />
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Kitap Kapak Resmi Url</label>
+                <input type="text" class="form-control" name="KitapFotoUrl" />
+            </div>
+
+            <div style="margin-top:10px">
+                <label>Kitap Özeti</label>
+                <input type="text" class="form-control" name="KitapOzet" />
+            </div>
+
+
+            <div style="margin-top:10px">
+                <button class="btn btn-info">Kaydet</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

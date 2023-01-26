@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="60be19e90b0e499882e84a88b989cacc" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="LIBRARYModel.Adminler" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Emanetler" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Favoriler" Width="1.5" PointX="4.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Kitaplar" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Kullanicilar" Width="1.5" PointX="7.125" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Turler" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIBRARYModel.Yazarlar" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="LIBRARYModel.FK_Emanetler_Kitaplar" ManuallyRouted="false" />
+        <AssociationConnector Association="LIBRARYModel.FK_Emanetler_Kullanıcılar" ManuallyRouted="false" />
+        <AssociationConnector Association="LIBRARYModel.FK_Favoriler_Kitaplar" ManuallyRouted="false" />
+        <AssociationConnector Association="LIBRARYModel.FK_Kitaplar_Turler" ManuallyRouted="false" />
+        <AssociationConnector Association="LIBRARYModel.FK_Kitaplar_Yazarlar" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LIBRARYModel.TeslimDurum" Width="1.5" PointX="9.875" PointY="4.25" />
+        <AssociationConnector Association="LIBRARYModel.FK_Emanetler_TeslimDurum" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
